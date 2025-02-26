@@ -1,4 +1,3 @@
-/*
 class Interpolator
 {
 
@@ -14,4 +13,3 @@ class Interpolator
 
 
 };
-*/
