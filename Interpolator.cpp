@@ -4,6 +4,7 @@ class Interpolator
     public:
         double startPos = 0.0;
         double endPos = 5.0;
+        Interpolator(double endddPos);
 
         
 
@@ -13,3 +14,8 @@ class Interpolator
 
 
 };
+
+Interpolator::Interpolator(double endddPos){
+    endPos = endddPos;
+
+}

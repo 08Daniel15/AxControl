@@ -15,7 +15,7 @@ int main() {
     
     std::cout << deltaPos << std::endl;
     
-    Interpolator Interpolator1;
+    Interpolator Interpolator1(10.0);
 
     std::cout<<Interpolator1.endPos << std::endl;
 
