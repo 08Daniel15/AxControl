@@ -2,35 +2,58 @@
 #include "Interpolator.cpp"
 #include <string>
 
+//int state = 0;
+
 int main() {
 
-    std::cout<<"Hallo World"<< std::endl;
-    
-    double startPos = 0.0;
-    double endPos = 0.0;
-    double deltaPos = 0.0;
-    deltaPos = endPos - startPos + deltaPos;
-    int z = 0;
-    int count = 5;
+    std::cout<<"Start up"<< std::endl;
+    //std::cout <<"hallo"<< std::endl;
+    //std::string test = "";
+    //std::cout << deltaPos << std::endl;
+    //Interpolator Interpolator1(10.0);
+    //std::cout<<Interpolator1.endPos << std::endl;
+
     int itr = 0;
-    std::string test = "";
-
-    std::cout << deltaPos << std::endl;
-    Interpolator Interpolator1(10.0);
-    std::cout<<Interpolator1.endPos << std::endl;
-
+    int state = 0;
+    std::string command = "";
     
-    for (int z = 0; itr < count; itr++)
+    while(true)
     {
-        z = z +1;
-        std::cout << z << std::endl;
-        std::cin>>test;
-        std::cout <<"hallo"<< std::endl;
+        std::cout<< "In While Loop : Count = "<< itr <<  std::endl;
+
+        
+        
+        switch(state){
+            case 0:
+                std::cin >> command;
+                state = std::stoi(command);
+                std::cout << "state 0 "<< std::endl;
+                break;
+
+            case 1:
+                std::cout << "state 1 "<< std::endl;
+                break;
+
+            default:
+                break;
+
+        }
+        
+
+
+        itr = itr + 1;
+
+        if(itr == 10)
+        {
+            break;
+        }
+
     }
-    
+
+
 
     return 0;
 
-    
+
 
 }
