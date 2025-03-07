@@ -30,9 +30,23 @@ int main() {
                 std::cout << "state 0 "<< std::endl;
                 break;
 
-            case 1:
-                std::cout << "state 1 "<< std::endl;
+            case 20:
+                std::cout << "state 20 "<< std::endl;
+                std::cout << "Berechne Werte" << std::endl;
                 break;
+
+            case 21:
+                std::cout <<" state 21 - Beschleunigen "<< std::endl;
+                break;
+
+            case 22:
+                std::cout <<" state 22 - Konstante Geschwindigkeit" << std::endl;
+                break;
+
+            case 23:
+                std::cout << " state 23 - Verzoegern" << std::endl;
+                break;
+
 
             default:
                 break;
@@ -45,7 +59,20 @@ int main() {
 
         if(itr == 10)
         {
-            break;
+            std::cout << "State[0] eingeben oder [n] um das Programm zu beenden" << std::endl;
+            std::cin >> command;
+
+            if(command == "n")
+            {
+                std::cout << "Programm wird abgebrochen";
+                break;
+            }
+            else
+            {
+                state = 0;
+                itr = 0;
+            }
+            
         }
 
     }
