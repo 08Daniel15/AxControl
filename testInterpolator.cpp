@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Interpolator.cpp"
 #include <string>
+#include "Interpolator.h"
 
-//int state = 0;
+Interpolator test1;
 
 int main() {
 
@@ -13,10 +13,15 @@ int main() {
     //Interpolator Interpolator1(10.0);
     //std::cout<<Interpolator1.endPos << std::endl;
 
+    Interpolator test2;
     int itr = 0;
     int state = 0;
     std::string command = "";
+    std::cout << test1.startPos << std::endl;
+    std::cout << test2.endPos << std::endl;
+
     
+
     while(true)
     {
         std::cout<< "In While Loop : Count = "<< itr <<  std::endl;
