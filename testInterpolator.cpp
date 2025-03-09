@@ -7,39 +7,30 @@
 int main() {
 
     std::cout<<"Start up"<< std::endl;
-    //std::cout <<"hallo"<< std::endl;
-    //std::string test = "";
-    //std::cout << deltaPos << std::endl;
-    //Interpolator Interpolator1(10.0);
-    //std::cout<<Interpolator1.endPos << std::endl;
 
-    Interpolator test1(5, 10);
-    Interpolator test2(5,10,1);
     int itr = 0;
     int state = 0;
-    std::string command = "";
-    //std::cout << test1.startPos << std::endl;
-    std::cout << "test 1" << std::endl;
-    std::cout << test1.startPos << std::endl;
-    std::cout << test1.endPos << std::endl;
-    std::cout << "test 2" << std::endl;
-    std::cout << test2.startPos << std::endl;
-    std::cout << test2.endPos << std::endl;
-    std::cout << test2.deltaPos << std::endl;
 
-    
+    double startPos = 0.0;
+    double endPos = 20;
+    double vMax = 10;
+    double aMax = 100;
+    double ts = 0.001;
+    std::string command = "";
+
+    Interpolator axis(vMax, aMax, ts);
 
     while(true)
     {
-        std::cout<< "In While Loop : Count = "<< itr <<  std::endl;
-
         
-        
-        switch(state){
+        switch(state)
+        {
             case 0:
                 std::cin >> command;
-                state = std::stoi(command);
-                std::cout << "state 0 "<< std::endl;
+                axis.Interpolate(0.0 ,10.0);
+
+                //state = std::stoi(command);
+                //std::cout << "state 0 "<< std::endl;
                 break;
 
             case 20:
@@ -69,7 +60,7 @@ int main() {
 
         itr = itr + 1;
 
-        if(itr == 10)
+        if(itr == 3)
         {
             std::cout << "State[0] eingeben oder [n] um das Programm zu beenden" << std::endl;
             std::cin >> command;
