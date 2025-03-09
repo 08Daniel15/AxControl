@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include "Interpolator.h"
+#include "Interpolator.cpp"
 
-Interpolator test1;
 
 int main() {
 
@@ -13,12 +13,19 @@ int main() {
     //Interpolator Interpolator1(10.0);
     //std::cout<<Interpolator1.endPos << std::endl;
 
-    Interpolator test2;
+    Interpolator test1(5, 10);
+    Interpolator test2(5,10,1);
     int itr = 0;
     int state = 0;
     std::string command = "";
+    //std::cout << test1.startPos << std::endl;
+    std::cout << "test 1" << std::endl;
     std::cout << test1.startPos << std::endl;
+    std::cout << test1.endPos << std::endl;
+    std::cout << "test 2" << std::endl;
+    std::cout << test2.startPos << std::endl;
     std::cout << test2.endPos << std::endl;
+    std::cout << test2.deltaPos << std::endl;
 
     
 

@@ -1,35 +1,12 @@
-
-
-// Hier erfolgt die Methodenprogrammierung
-
-/*
-class Interpolator
+Interpolator::Interpolator(double c_startPos, double c_endPos){
+    startPos = c_startPos; 
+    endPos = c_endPos;
+}
+    
+Interpolator::Interpolator(double c_startPos, double c_endPos, double c_deltaPos)
 {
-
-    public:
-        double startPos = 0.0;
-        double endPos = 5.0;
-        // Geschwindigkeit
-        // Beschleunigung
-
-        Interpolator(double endddPos);
-
-        
-
-    private:
-        double malsehen = 0.0;
-        int counts = 0;
-        // startpos 
-        // endpos
-        // Counts Beschleunigen
-        // Counts Konstante Geschwindigkeit 
-        // Counts Verzoegern
-
-
-};
-
-Interpolator::Interpolator(double endddPos){
-    endPos = endddPos; 
+    startPos = c_startPos; 
+    endPos = c_endPos;
+    deltaPos = c_deltaPos;
 
 }
-    */
