@@ -18,6 +18,8 @@ int main() {
     double ts = 0.001;
     double wert = 0.0;
     double wert2 = 0.0;
+    bool test = false;
+    double sollPos;
     std::string command = "";
 
     Interpolator axis(vMax, aMax, ts);
@@ -37,30 +39,36 @@ int main() {
                         - Taster ...
                         - Automatik Betrieb ...
                 */
-                axis.DetermineValues(0.0 ,10.0);
+                axis.Command(0.0 ,10.0);
                 state = 20;
                 std::cout << "state = " << state << std::endl;
+                std::cout << "itr   = " << itr << std::endl;
                 //state = std::stoi(command);
                 //std::cout << "state 0 "<< std::endl;
                 break;
 
 
             case 20:
+                std::cout << " " << std::endl;
                 std::cout << "state 20 "<< std::endl;
+                sollPos = axis.InterpolationStep();
+                test = axis.JobDone();
+                //std::cout << "Test = " << test << std::endl;
                 
-                wert = axis.InterpolationStep();
-                //std::cout << "wert = " << wert << std::endl;
-
-                wert2 = axis.sollPos;
-                std::cout << "Wert2 = " << wert2 << std::endl;
+                if(axis.JobDone())
+                {
+                    state = 99;
+                    break;
+                }
+                
                 
                 break;
 
                 
-            case 21:
+            case 99:
                 std::cout <<" state 21 - Beschleunigen "<< std::endl;
                 break;
-
+            /*
             case 22:
                 std::cout <<" state 22 - Konstante Geschwindigkeit" << std::endl;
                 break;
@@ -70,20 +78,27 @@ int main() {
                 std::cout << " state 23 - Verzoegern" << std::endl;
                 break;
 
+                */
+
 
             default:
                 break;
 
         }
+
+
         
 
 
         itr = itr + 1;
+        std::cout << "itr = " << itr << std::endl;
+        std::cout << "sollPos = " << sollPos << std::endl;
 
-        if(itr == 1000)
+        if(itr == 1105)
         {
             break;
         }
+
 
     }
 

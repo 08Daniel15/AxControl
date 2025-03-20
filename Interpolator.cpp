@@ -9,13 +9,14 @@ Interpolator::Interpolator(double vMax, double aMax, double ts)
     c_vMax = vMax;
     c_aMax = aMax;
     c_ts = ts;
-    std::cout << c_vMax << std::endl;
-    std::cout << c_aMax << std::endl;
+    std::cout << "Velocity = " << c_vMax << std::endl;
+    std::cout << "Acceleration = " << c_aMax << std::endl;
 
 }
 
 void Interpolator::DetermineValues(double startPos, double endPos)
 {
+    std::cout << " "<< std::endl;
     std::cout << "Methode Determine Values" << std::endl;
 
     c_state = 0;
@@ -29,9 +30,9 @@ void Interpolator::DetermineValues(double startPos, double endPos)
 
     // Acceleration Time / Length 
     c_timeAcc = c_vMax / c_aMax;
-    c_s_Acc = 1/2 * c_aMax * c_aMax * c_timeAcc + c_startPos;
+    c_s_Acc = 0.5 * c_aMax * c_timeAcc*c_timeAcc + c_startPos;
     c_z_Acc = (int)(c_timeAcc / c_ts);
-    std::cout << "AccTime   = " << (double)c_timeAcc << std::endl;
+    std::cout << "AccTime   = " << c_timeAcc << std::endl;
     std::cout << "AccLength = " << c_s_Acc << std:: endl; 
     std::cout << "AccCounts = " << c_z_Acc << std::endl;
 
@@ -63,12 +64,79 @@ double Interpolator::InterpolationStep()
             sollPos = 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts);
 
             c_ticks = c_ticks + 1;
+
+            if(c_ticks == c_z_Acc)
+            {
+                c_state = 12;
+                c_ticks = 1;
+                sollPos_0 = sollPos;
+                //jobDone = true;
+            }
+            break;
+        
+        case 12:
+            sollPos = c_vMax * c_ts + sollPos;
+            if(c_ticks == c_z_Con +1)
+            {
+                c_state = 13;
+                jobDone = false;
+                sollPos_0 = sollPos;
+                c_ticks = 1;
+                break;
+            }
+            c_ticks = c_ticks + 1;
             break;
 
+        case 13:
+            sollPos = sollPos_0 + c_vMax * c_ts - 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts);
+            
+            if(c_ticks == c_z_Acc)
+            {
+                jobDone = true;
+                c_state = 99;
+                sollPos = c_endPos;
+                c_ticks = 1;
+                
+                break;
+            }
+            c_ticks = c_ticks + 1;
+            break;
 
+        case 99:
+            std::cout << "stop doing anything " << std::endl;
+            break;
+
+        default:
+            break;
+
+            
+        //return sollPos;
 
     }
 
 
-    return 10.5;
+    return sollPos;
+}
+
+double Interpolator::Command(double startPos, double endPos)
+{
+    jobDone = false;
+    c_startPos = startPos;
+    c_endPos = endPos;
+
+    DetermineValues(c_startPos , c_endPos);
+    
+    return 0.0;
+}
+
+
+void Interpolator::DebugValues()
+{
+    
+}
+    
+
+bool Interpolator::JobDone()
+{
+    return jobDone;
 }
