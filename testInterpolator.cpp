@@ -1,7 +1,12 @@
 #include <iostream>
+#include <fstream> // Fuer File eingefuegt
 #include <string>
 #include "Interpolator.h"
 #include "Interpolator.cpp"
+#include "writeData2File.h"
+#include "writeData2File.cpp"
+
+//using namespace std; // Fuer File eingefuegt
 
 
 int main() {
@@ -19,11 +24,12 @@ int main() {
     double wert = 0.0;
     double wert2 = 0.0;
     bool test = false;
-    double sollPos;
+    double sollPos = 0.0;
     std::string command = "";
 
     Interpolator axis(vMax, aMax, ts);
-
+    writeData2File debugData(sollPos, vMax);
+    
     while(true)
     {
         // Sensor Werte einlesen
@@ -94,13 +100,28 @@ int main() {
         std::cout << "itr = " << itr << std::endl;
         std::cout << "sollPos = " << sollPos << std::endl;
 
-        if(itr == 1105)
+        if(itr == 1)
         {
             break;
         }
 
 
     }
+
+    
+
+    std::cout << "Hallo File" << std::endl;
+    std::cout << "  " << std::endl;
+    debugData.writeData(sollPos, vMax);
+
+    /*
+    std::ofstream myfile;
+    myfile.open ("example.txt");
+    myfile << "Writing this to a file.\n";
+    myfile << "Write this also to a file.\n";
+    myfile << "And so on.\n";
+    myfile.close();
+    */
 
     return 0;
 
