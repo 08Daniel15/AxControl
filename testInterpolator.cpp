@@ -29,6 +29,7 @@ int main() {
 
     Interpolator axis(vMax, aMax, ts);
     writeData2File debugData(sollPos, vMax);
+    debugData.writeData(sollPos,vMax);
     
     while(true)
     {
@@ -99,6 +100,9 @@ int main() {
         itr = itr + 1;
         std::cout << "itr = " << itr << std::endl;
         std::cout << "sollPos = " << sollPos << std::endl;
+        std::cout << "Hallo File " << std::endl;
+        debugData.writeData(sollPos, vMax);
+        debugData.closeFile();
 
         if(itr == 1)
         {
@@ -110,9 +114,10 @@ int main() {
 
     
 
-    std::cout << "Hallo File" << std::endl;
-    std::cout << "  " << std::endl;
-    debugData.writeData(sollPos, vMax);
+    //std::cout << "Hallo File" << std::endl;
+    //std::cout << "  " << std::endl;
+    
+
 
     /*
     std::ofstream myfile;
