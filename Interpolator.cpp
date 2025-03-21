@@ -88,7 +88,7 @@ double Interpolator::InterpolationStep()
             break;
 
         case 13:
-            sollPos = sollPos_0 + c_vMax * c_ts - 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts);
+            sollPos = sollPos_0 + c_vMax * (c_ticks * c_ts) - 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts);
             
             if(c_ticks == c_z_Acc)
             {

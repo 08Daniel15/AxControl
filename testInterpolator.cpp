@@ -26,9 +26,11 @@ int main() {
     bool test = false;
     double sollPos = 0.0;
     std::string command = "";
+    std::string n_sollPos = "sollPos"; // Name
+    std::string n_sollVel = "sollVel"; // Name
 
     Interpolator axis(vMax, aMax, ts);
-    writeData2File debugData(sollPos, vMax);
+    writeData2File debugData(sollPos,n_sollPos, vMax, n_sollVel);
     debugData.writeData(sollPos,vMax);
     
     while(true)
@@ -102,10 +104,11 @@ int main() {
         std::cout << "sollPos = " << sollPos << std::endl;
         std::cout << "Hallo File " << std::endl;
         debugData.writeData(sollPos, vMax);
-        debugData.closeFile();
+        
 
-        if(itr == 1)
+        if(itr == 1200)
         {
+            debugData.closeFile();
             break;
         }
 
