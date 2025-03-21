@@ -12,7 +12,7 @@ writeData2File::writeData2File(double data1)
 writeData2File::writeData2File(double data1, std::string name1, double data2, std::string name2)
 {
     
-    myfile.open ("myData6.csv");
+    myfile.open ("myData.csv");
     myfile << name1 << "," << name2 << "\n";
 
 }

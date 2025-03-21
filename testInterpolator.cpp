@@ -17,7 +17,7 @@ int main() {
     int state = 0;
 
     double startPos = 0.0;
-    double endPos = 20;
+    double endPos = 1.0;
     double vMax = 10.0;
     double aMax = 100.0;
     double ts = 0.001;
@@ -48,7 +48,7 @@ int main() {
                         - Taster ...
                         - Automatik Betrieb ...
                 */
-                axis.Command(0.0 ,10.0);
+                axis.Command(startPos , endPos);
                 state = 20;
                 std::cout << "state = " << state << std::endl;
                 std::cout << "itr   = " << itr << std::endl;
@@ -102,7 +102,7 @@ int main() {
         itr = itr + 1;
         std::cout << "itr = " << itr << std::endl;
         std::cout << "sollPos = " << sollPos << std::endl;
-        std::cout << "Hallo File " << std::endl;
+        //std::cout << "Hallo File " << std::endl;
         debugData.writeData(sollPos, vMax);
         
 
@@ -115,24 +115,7 @@ int main() {
 
     }
 
-    
-
-    //std::cout << "Hallo File" << std::endl;
-    //std::cout << "  " << std::endl;
-    
-
-
-    /*
-    std::ofstream myfile;
-    myfile.open ("example.txt");
-    myfile << "Writing this to a file.\n";
-    myfile << "Write this also to a file.\n";
-    myfile << "And so on.\n";
-    myfile.close();
-    */
-
+   
     return 0;
-
-
 
 }

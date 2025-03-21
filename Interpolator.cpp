@@ -26,24 +26,65 @@ void Interpolator::DetermineValues(double startPos, double endPos)
 
     // Delta Pos
     c_deltaPos =  c_endPos - c_startPos;
-    std::cout << "DeltaPos  = " << c_deltaPos << std::endl;
+    std::cout << "Delta Pos = " << c_deltaPos << std::endl;
 
-    // Acceleration Time / Length 
-    c_timeAcc = c_vMax / c_aMax;
-    c_s_Acc = 0.5 * c_aMax * c_timeAcc*c_timeAcc + c_startPos;
-    c_z_Acc = (int)(c_timeAcc / c_ts);
-    std::cout << "AccTime   = " << c_timeAcc << std::endl;
-    std::cout << "AccLength = " << c_s_Acc << std:: endl; 
-    std::cout << "AccCounts = " << c_z_Acc << std::endl;
+    c_ticks = 0;
 
-    // Constant Velocity 
-    c_s_Con = c_deltaPos - 2 * c_s_Acc;
-    c_time_Con = c_s_Con / c_vMax;
-    c_z_Con = (int)(c_time_Con/c_ts);
-    std::cout << " " << std::endl;
-    std::cout << "ConstTime = " << c_time_Con << std::endl;
-    std::cout << "ConstLeng = " << c_s_Con << std::endl;
-    std::cout << "ConstCoun = " << c_z_Con << std::endl;
+    if(c_deltaPos > 0.0)
+    {
+        
+        // Acceleration Time / Length 
+        c_timeAcc = c_vMax / c_aMax;
+        c_s_Acc = 0.5 * c_aMax * c_timeAcc*c_timeAcc;
+
+        if(c_deltaPos > 2*c_s_Acc)
+        {
+            c_state = 11;
+            c_z_Acc = (int)(c_timeAcc / c_ts);
+
+                // Constant Velocity 
+            c_s_Con = c_deltaPos - 2 * c_s_Acc;
+            c_time_Con = c_s_Con / c_vMax;
+            c_z_Con = (int)(c_time_Con/c_ts);
+            std::cout << " " << std::endl;
+            std::cout << "ConstTime = " << c_time_Con << std::endl;
+            std::cout << "ConstLeng = " << c_s_Con << std::endl;
+            std::cout << "ConstCoun = " << c_z_Con << std::endl;
+        }
+        else
+        {
+            c_state = 31;
+            std::cout << "Pos Weg zu kurz" << std::endl;
+
+
+            c_s_Con = c_deltaPos;
+            c_z_Con = (int)((c_s_Con / (c_vMax / 4))/c_ts);
+            std::cout << "ConstLeng = " << c_s_Con << std::endl;
+            std::cout << "ConstCoun = " << c_z_Con << std::endl;
+            
+        }
+
+        
+    }
+    else
+    {
+        c_deltaPos = abs(c_endPos - c_startPos);
+        c_timeAcc = c_vMax / c_aMax;
+        c_s_Acc = 0.5 * c_aMax * c_timeAcc*c_timeAcc;
+        
+        if(c_deltaPos > 2*c_s_Acc)
+        {
+            c_state =21;
+        }
+        else
+        {
+            c_state = 41;
+            std::cout << "Neg Weg zu kurz" << std::endl;
+        }
+
+
+
+    }
 
 }
 
@@ -57,11 +98,11 @@ double Interpolator::InterpolationStep()
     {
         case 0:
             // Ueberprüfe welche Interpolationsmodus aktiv ist
-            c_state = 11;
+            //c_state = 11;
             break;
 
         case 11:
-            sollPos = 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts);
+            sollPos = 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts) + c_startPos;
 
             c_ticks = c_ticks + 1;
 
@@ -101,6 +142,21 @@ double Interpolator::InterpolationStep()
             }
             c_ticks = c_ticks + 1;
             break;
+
+        case 31:
+            sollPos = c_startPos + c_vMax / 4 * (c_ticks * c_ts);
+
+            if(c_ticks ==  c_z_Con)
+            {
+                c_ticks = 1;
+                c_state = 32;
+                break;
+            }
+            c_ticks = c_ticks + 1;
+            break;
+
+        case 32:
+
 
         case 99:
             std::cout << "stop doing anything " << std::endl;
