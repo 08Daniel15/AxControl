@@ -108,9 +108,6 @@ void Interpolator::DetermineValues(double startPos, double endPos)
 
 double Interpolator::InterpolationStep()
 {
-    //std::cout << "Hallo Interpolation Step" << std::endl;
-    std::cout << "c_state = " << c_state << std::endl;
-    std::cout << "c_ticks = "<< c_ticks << std::endl;
 
     switch(c_state)
     {
@@ -171,20 +168,19 @@ double Interpolator::InterpolationStep()
             sollVel = - c_aMax * (c_ticks * c_ts);
 
             c_ticks = c_ticks + 1;
-            std::cout << "c_state = " << c_state << std::endl;
             if(c_ticks == c_z_Acc)
             {
                 c_state = 22;
                 c_ticks = 1;
                 sollPos_0 = sollPos;
-                //jobDone = true;
+                
             }
             break;
 
         case 22:
             sollPos = -c_vMax * c_ts + sollPos;
             sollVel = -c_vMax;
-            std::cout << "c_state = " << c_state << std::endl;
+
             if(c_ticks == c_z_Con +1)
             {
                 c_state = 23;
@@ -199,7 +195,7 @@ double Interpolator::InterpolationStep()
         case 23:
             sollPos = sollPos_0 - c_vMax * (c_ticks * c_ts) + 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts);
             sollVel = - c_vMax + c_aMax * (c_ticks * c_ts);
-            std::cout << "c_state = " << c_state << std::endl;
+
             if(c_ticks == c_z_Acc)
             {
                 jobDone = true;
