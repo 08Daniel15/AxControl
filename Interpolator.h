@@ -28,6 +28,7 @@ class Interpolator
         double c_time_Con;
         int c_state;
         double sollPos_0;
+        double c_velFactor = 4.0;
 
         // Counts
         int c_z_Acc;    

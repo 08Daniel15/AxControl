@@ -16,8 +16,8 @@ int main() {
     int itr = 0;
     int state = 0;
 
-    double startPos = 0.0;
-    double endPos = 1.0;
+    double startPos = -10.0;
+    double endPos = -20.0;
     double vMax = 10.0;
     double aMax = 100.0;
     double ts = 0.001;
