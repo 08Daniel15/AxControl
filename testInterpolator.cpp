@@ -16,8 +16,8 @@ int main() {
     int itr = 0;
     int state = 0;
 
-    double startPos = -10.0;
-    double endPos = -20.0;
+    double startPos = 0.0;
+    double endPos = -10.0;
     double vMax = 10.0;
     double aMax = 100.0;
     double ts = 0.001;
@@ -25,13 +25,14 @@ int main() {
     double wert2 = 0.0;
     bool test = false;
     double sollPos = 0.0;
+    double sollVel = 0.0;
     std::string command = "";
     std::string n_sollPos = "sollPos"; // Name
     std::string n_sollVel = "sollVel"; // Name
 
     Interpolator axis(vMax, aMax, ts);
     writeData2File debugData(sollPos,n_sollPos, vMax, n_sollVel);
-    debugData.writeData(sollPos,vMax);
+    //debugData.writeData(sollPos,sollVel);
     
     while(true)
     {
@@ -61,6 +62,8 @@ int main() {
                 std::cout << " " << std::endl;
                 std::cout << "state 20 "<< std::endl;
                 sollPos = axis.InterpolationStep();
+                sollPos = axis.sollPos;
+                sollVel = axis.sollVel;
                 test = axis.JobDone();
                 //std::cout << "Test = " << test << std::endl;
                 
@@ -103,7 +106,7 @@ int main() {
         std::cout << "itr = " << itr << std::endl;
         std::cout << "sollPos = " << sollPos << std::endl;
         //std::cout << "Hallo File " << std::endl;
-        debugData.writeData(sollPos, vMax);
+        debugData.writeData(sollPos, sollVel);
         
 
         if(itr == 1200)

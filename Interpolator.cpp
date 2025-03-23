@@ -122,6 +122,7 @@ double Interpolator::InterpolationStep()
 
         case 11:
             sollPos = 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts) + c_startPos;
+            sollVel = c_aMax * (c_ticks * c_ts);
 
             c_ticks = c_ticks + 1;
 
@@ -136,6 +137,8 @@ double Interpolator::InterpolationStep()
         
         case 12:
             sollPos = c_vMax * c_ts + sollPos;
+            sollVel = c_vMax;
+
             if(c_ticks == c_z_Con +1)
             {
                 c_state = 13;
@@ -149,7 +152,8 @@ double Interpolator::InterpolationStep()
 
         case 13:
             sollPos = sollPos_0 + c_vMax * (c_ticks * c_ts) - 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts);
-            
+            sollVel = c_vMax - c_aMax * (c_ticks * c_ts);
+
             if(c_ticks == c_z_Acc)
             {
                 jobDone = true;
@@ -164,6 +168,7 @@ double Interpolator::InterpolationStep()
 
         case 21:
             sollPos = - 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts) + c_startPos;
+            sollVel = - c_aMax * (c_ticks * c_ts);
 
             c_ticks = c_ticks + 1;
             std::cout << "c_state = " << c_state << std::endl;
@@ -178,6 +183,7 @@ double Interpolator::InterpolationStep()
 
         case 22:
             sollPos = -c_vMax * c_ts + sollPos;
+            sollVel = -c_vMax;
             std::cout << "c_state = " << c_state << std::endl;
             if(c_ticks == c_z_Con +1)
             {
@@ -192,6 +198,7 @@ double Interpolator::InterpolationStep()
 
         case 23:
             sollPos = sollPos_0 - c_vMax * (c_ticks * c_ts) + 0.5 * c_aMax * (c_ticks * c_ts) * (c_ticks * c_ts);
+            sollVel = - c_vMax + c_aMax * (c_ticks * c_ts);
             std::cout << "c_state = " << c_state << std::endl;
             if(c_ticks == c_z_Acc)
             {
@@ -208,9 +215,12 @@ double Interpolator::InterpolationStep()
 
         case 31:
             sollPos = c_startPos + c_vMax / c_velFactor * (c_ticks * c_ts);
+            sollVel = c_vMax / c_velFactor;
 
             if(c_ticks ==  c_z_Con)
             {
+                sollPos = c_endPos;
+                sollVel = 0.0;
                 c_ticks = 1;
                 c_state = 32;
                 break;
@@ -220,9 +230,12 @@ double Interpolator::InterpolationStep()
 
         case 41:
             sollPos = c_startPos - c_vMax / c_velFactor * (c_ticks * c_ts);
+            sollVel = - c_vMax / c_velFactor;
 
             if(c_ticks ==  c_z_Con)
             {
+                sollPos = c_endPos;
+                sollVel = 0.0;
                 c_ticks = 1;
                 c_state = 99;
                 break;
@@ -237,9 +250,6 @@ double Interpolator::InterpolationStep()
 
         default:
             break;
-
-            
-        //return sollPos;
 
     }
 
