@@ -1,0 +1,86 @@
+Um in Visual Studio Code (VSCode) mit C++ RS232-Daten zu lesen, die über einen RS232-zu-USB-Adapter übertragen werden, benötigst du eine Bibliothek, die es ermöglicht, serielle Kommunikation zu handhaben. Eine der bekanntesten und am häufigsten verwendeten Bibliotheken ist **Boost.Asio**. Es gibt aber auch einfachere Alternativen wie **termios** unter Unix-basierten Systemen oder **Windows-API** unter Windows. 
+
+Hier sind die grundlegenden Schritte, die du befolgen musst:
+
+### 1. Installiere VSCode und C++ Erweiterungen
+- Installiere [VSCode](https://code.visualstudio.com/).
+- Installiere die C++-Erweiterung in VSCode: Gehe zu den Erweiterungen (`Ctrl+Shift+X`) und suche nach "C++". Installiere die von Microsoft bereitgestellte Erweiterung.
+
+### 2. Installiere eine geeignete Bibliothek
+Die bevorzugte Bibliothek für serielle Kommunikation ist **Boost.Asio**, da sie plattformübergreifend und einfach zu verwenden ist.
+
+#### a) Installiere Boost
+Falls Boost noch nicht auf deinem System installiert ist, kannst du es je nach Betriebssystem wie folgt installieren:
+
+**Windows**: Lade die Boost-Bibliothek von [Boost.org](https://www.boost.org/) herunter und folge den Installationsanweisungen.
+
+**Linux** (z.B. Ubuntu):
+```bash
+sudo apt-get install libboost-all-dev
+```
+
+**MacOS**:
+```bash
+brew install boost
+```
+
+#### b) Füge Boost zu deinem Projekt hinzu
+Erstelle ein Projekt in VSCode und füge Boost hinzu, indem du es in deiner `tasks.json` oder `CMakeLists.txt` (je nachdem, wie du deinen C++-Code kompilierst) einfügst.
+
+### 3. Schreibe den C++ Code, um serielle Daten zu lesen
+Hier ist ein einfaches Beispiel, wie du eine serielle Verbindung über RS232 mit Boost.Asio herstellen kannst.
+
+#### Beispiel C++-Code:
+
+```cpp
+#include <boost/asio.hpp>
+#include <iostream>
+#include <string>
+
+using namespace boost::asio;
+using namespace std;
+
+int main() {
+    io_service io;
+    
+    // RS232-Port (finde den richtigen Portnamen je nach Betriebssystem)
+    serial_port serial(io, "COM3");  // Auf Windows z.B. COM3, auf Linux /dev/ttyUSB0
+    
+    // Setze die Baudrate, Parität, Stopbits und Databits
+    serial.set_option(serial_port_base::baud_rate(9600));
+    serial.set_option(serial_port_base::character_size(8));
+    serial.set_option(serial_port_base::stop_bits(serial_port_base::stop_bits::one));
+    serial.set_option(serial_port_base::parity(serial_port_base::parity::none));
+    
+    // Daten lesen
+    char buf[128];
+    while (true) {
+        boost::asio::read(serial, boost::asio::buffer(buf, sizeof(buf)));
+        cout << "Empfangene Daten: " << buf << endl;
+    }
+
+    return 0;
+}
+```
+
+### 4. Kompiliere den Code
+Du kannst den Code entweder mit `g++` (oder einem anderen C++-Compiler) direkt über die Kommandozeile kompilieren oder ein CMake-Projekt in VSCode einrichten.
+
+#### Beispiel mit g++:
+```bash
+g++ -o serial_reader serial_reader.cpp -lboost_system -pthread
+./serial_reader
+```
+
+### 5. Wähle den richtigen Port
+- Auf **Windows** könnte der Portname zum Beispiel `COM3` oder `COM4` sein. Du kannst den richtigen Port in den Windows-Geräteeinstellungen unter "Gerätemanager" einsehen.
+- Auf **Linux** oder **macOS** ist der Port oft `/dev/ttyUSB0` oder `/dev/ttyACM0`.
+
+### 6. Teste die Kommunikation
+Sobald der Code läuft, sollte er in der Lage sein, Daten vom RS232-Port zu empfangen und auszugeben. Achte darauf, dass der RS232-zu-USB-Adapter ordnungsgemäß angeschlossen ist und die richtigen Treiber installiert sind.
+
+### Weitere Schritte
+- Du kannst zusätzliche Funktionen wie das Schreiben von Daten zur seriellen Schnittstelle hinzufügen.
+- Falls du komplexere Kommunikationsanforderungen hast (z.B. Handshakes, spezielle Protokolle), musst du die Konfiguration der seriellen Schnittstelle anpassen.
+
+Hoffentlich hilft dir das weiter! Wenn du eine genauere Anleitung zu einer spezifischen Bibliothek oder Plattform benötigst, lass es mich wissen.
