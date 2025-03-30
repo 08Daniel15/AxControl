@@ -89,7 +89,7 @@ int main() {
 
         debugData.writeData(sollPos, sollVel);
         
-        if(itr == 200)
+        if(itr == 2)
         {
             debugData.closeFile();
             break;
