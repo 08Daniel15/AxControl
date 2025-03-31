@@ -17,9 +17,14 @@ class CommandInterpreter
     private:
         int state = 0; 
         std::string command= "";
+        std::string axis = "";
+        std::string str_pos = "";
+        std::string gCode = "";
+        double pos;
         void getState(std::string command);
         void standardMode();
         void keyboardMode();
+        void G02();
 
 
 };

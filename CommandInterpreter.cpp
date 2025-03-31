@@ -24,13 +24,13 @@ void CommandInterpreter::readCommand(std::string input)
 
     }
 
-    for(int itr = 0; itr < input.length(); itr++ )
-    {
+    //for(int itr = 0; itr < input.length(); itr++ )
+    //{
 
-        std::cout << input[itr] << std::endl;
+       //std::cout << input[itr] << std::endl;
 
 
-    }
+    //}
 
 }
 
@@ -55,6 +55,36 @@ void CommandInterpreter::getState(std::string command)
 void CommandInterpreter::standardMode()
 {
     std::cout << "Standard Mode" << std::endl;
+
+    // G-Code
+    gCode = std::string() + command[0] + command[1] + command[2];
+    std::cout << "G-Code = " << gCode << std::endl;
+
+    if(gCode == "G02")
+    {
+        std::cout << "G02" << std::endl;
+        G02();
+    }
+    else
+    {
+        std::cout << "G-Code not implemented "<< std::endl;
+    }
+
+}
+
+void CommandInterpreter::G02()
+{
+
+    axis = command[3];
+
+    for(int itr = 4 ; itr < command.length(); itr++)
+    {
+        str_pos = std::string() + str_pos + command[itr];
+    }
+
+    std::cout << str_pos << std::endl;
+    pos = stod(str_pos); // string to double string2double
+    std::cout << pos << std::endl;
 }
 
 void CommandInterpreter::keyboardMode()

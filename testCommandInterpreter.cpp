@@ -13,9 +13,9 @@ int main()
 
     //std::string test = "";
 
-    std::cin >> test;
-    commando.readCommand(test);
-    //commando.readCommand("G02A100");
+    //std::cin >> test;
+    //commando.readCommand(test);
+    commando.readCommand("G02A100");
     //commando.readCommand("Keyboard");
 
     
