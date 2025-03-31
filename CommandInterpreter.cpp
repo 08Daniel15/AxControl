@@ -62,7 +62,7 @@ void CommandInterpreter::standardMode()
 
     if(gCode == "G02")
     {
-        std::cout << "G02" << std::endl;
+        std::cout << "Method = G02" << std::endl;
         G02();
     }
     else
@@ -82,9 +82,13 @@ void CommandInterpreter::G02()
         str_pos = std::string() + str_pos + command[itr];
     }
 
-    std::cout << str_pos << std::endl;
+    //std::cout << str_pos << std::endl;
     pos = stod(str_pos); // string to double string2double
-    std::cout << pos << std::endl;
+    //std::cout << pos << std::endl;
+
+    std::cout << "Axis       = " << axis << std::endl;
+    std::cout << "targrt Pos = " << pos << std::endl;
+
 }
 
 void CommandInterpreter::keyboardMode()
